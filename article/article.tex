@@ -15,19 +15,102 @@
 
 \maketitle
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in
-hendrerit ligula. Cras malesuada auctor egestas. In eu placerat
-dolor. Vestibulum rhoncus risus nulla. Praesent consequat diam nec
-neque hendrerit, ac convallis turpis feugiat. Nulla quis nisi
-lectus. Suspendisse ipsum eros, facilisis at nulla sed, dignissim
-rhoncus erat. Suspendisse ut odio quis justo egestas condimentum eu
-vitae mauris. Donec tincidunt sapien ex, at porta arcu scelerisque
-in. Nunc porttitor risus et rhoncus venenatis. Sed aliquet rhoncus
-interdum. Quisque nec lacinia risus. Nulla mi nulla, varius ac elit
-iaculis, blandit lobortis augue. In pharetra erat ut ipsum pulvinar,
-id blandit purus mollis.
+\section*{Background}
+When delineating travel catchment areas or travel sheds, network-based
+buffers are often preferable to circular, great arc buffers in that
+network buffers more realistically reflect the distance limitations
+imposed by different street patterns. \textcite{Forsyth2014sausage}
+identified a threat to replicability for studies using such buffers,
+due to changes over the years in how ESRI's market-leading GIS
+software has calculated such service areas. In response,
+\citeauthor{Forsyth2014sausage} proposed ``sausage'' network buffers,
+created via a transparent algorithm, for use in measuring aspects of
+urban form related to food and physical activity. Presented as
+replicable and cross-platform, the implementation described in that
+article nevertheless relies on ESRI's commercial GIS and Network
+Analyst extensions, and is thus tied to the Microsoft Windows
+platform. This paper validates the the sausage buffer technique with
+particular attention paid to reproducibility and cross-platform
+implementation using readily available free and open source
+software. Then, because buffer creation is often an early step in a
+larger analysis, we present a case study demonstrating the
+complementarity of our sausage buffering implementation with a typical
+follow-on analysis within the PostGIS platform.
 
-\cite{Forsyth2014sausage}
+% Let's mention something about reproducibility up front.
+The methods presented here are in part a response to a growing call
+from across numerous disciplines to ensure computer aided analyses are
+reproducible. The basic standard for reproducibility is that the data
+used are available, and that analyses are shared in the form of
+computer code \cite{Peng2011computational}. In that sense, the methods
+presented here are reproducible because analyses are executable code
+rather than a set of manual procedures, and that those pieces of code
+and the data are publicly available. Further, building these methods
+atop free and open source software achieves a higher standard of
+reproducibility by eliminating dependencies on any ``black box''
+computer code. In principle, this means that every piece of software
+used in these methods is open to scrutiny.
+
+% Relevance to planning and epidemiology
+Developing geoprocessing methods around free and open source tools
+holds particular benefits for disciplines such as epidemiology, public
+policy, and urban planning because of the reduced barriers of adoption
+for practitioners and advocates outside of academia. Academic
+institutions and larger public agencies may be able to afford software
+licenses. However, smaller agencies or advocacy groups wishing to
+perform, for example, walkshed analysis might otherwise be unable to
+make use of analyses reliant on proprietary software.
+
+% Not a literature review, per se. Since we are developing a methods
+% paper largely in response to one particularly important method, I'm
+% not sure how important a full-blown review is. Open to suggestions,
+% however. This could potentially be split off and developed into
+% something more complete. 
+Finally, the PostGIS platform is especially beneficial in that it
+naturally facilitates reproducible scripted analyses, as well as can
+provide the core infrastructure for data management on a research
+project. We are not the first to identify PostGIS for use in
+research. In a keyword search for ``PostGIS'' on ISI Web of Science,
+we identified 35 articles across a number of disciplines describing
+their use of PostGIS. In the transportation sector,
+\textcite{Wang2015routable} used PostGIS to store and analyze a large
+number of GPS traces in order to infer characteristics about roadways
+such as position and rules, for the purposes of generating routable
+roadway networks. In another recent article,
+\textcite{Brovelli2015FOSS} describe the use of PostGIS together with
+GeoServer to collect data about roadway pavement conditions from the
+general public. Notable in this study is the potential for PostGIS in
+supporting digitally-mediated public participation.
+
+
+
+\section*{Methods}
+Using the process described by \textcite{Forsyth2014sausage}, we
+implemented the sausage buffering technique using the PostgreSQL
+relational database with PostGIS and PgRouting extensions. We then
+implemented the same technique in ArcGIS Desktop X.XX, as a basis for
+comparison with the results presented by
+\citeauthor{Forsyth2014sausage}.
+
+Using the two buffering implementations, we generated two sets of
+sausage buffers around a common set of N points. These points were
+randomly selected from non-water areas of <SOME GEOGRAPHY, probably
+King County>. We then make several cross-comparisons between the two
+sets of buffers, matching buffers according to a unique identifier
+assigned to the initial set of points. First we compare the difference
+in area between each set of buffers. Then, to assess the possibility
+of spatial misalignment between similarly sized buffers, we computed
+the symmetric difference of the two sets of sausage buffers and then
+calculated the area of the non-overlapping regions.
+
+
+\section*{Results}
+
+
+\section*{Discussion}
+
+
+\section*{Conclusions}
 
 
 \printbibliography
